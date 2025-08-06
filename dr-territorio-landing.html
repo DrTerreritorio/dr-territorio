@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Território - Regularização Fundiária Inteligente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo::before {
+            content: "🏛️";
+            font-size: 30px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 60px;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            animation: fadeInUp 1s;
+        }
+        
+        .price-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s;
+        }
+        
+        .price-tag strong {
+            color: #ffeb3b;
+            font-size: 24px;
+        }
+        
+        /* Demo Section */
+        .demo-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: fadeInUp 1.4s;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-header h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        
+        .profile-card.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .profile-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .demo-content {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            min-height: 300px;
+        }
+        
+        .service-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .service-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .service-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .service-list li::before {
+            content: "✅";
+            font-size: 20px;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            background: white;
+            padding: 60px 0;
+            margin-top: -20px;
+        }
+        
+        .benefits h2 {
+            text-align: center;
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            transition: all 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 0;
+            color: white;
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .pricing-card.featured::before {
+            content: "MAIS POPULAR";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+        
+        .price small {
+            font-size: 16px;
+            color: #999;
+        }
+        
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .features li::before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .email-form {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .email-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            min-width: 250px;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            padding: 5px 0;
+        }
+        
+        .footer-section ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+        
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .profile-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            animation: fadeInUp 0.5s;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Dr. Território</div>
+                <div class="nav-buttons">
+                    <a href="#demo" class="btn btn-secondary">Demonstração</a>
+                    <a href="#pricing" class="btn btn-primary">Começar Grátis</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Regularização Fundiária com IA</h1>
+            <p>O assistente inteligente para advogados, cartórios e profissionais do setor imobiliário</p>
+            <div class="price-tag">
+                Planos a partir de <strong>R$ 5,99</strong>/mês
+            </div>
+            <div>
+                <button class="btn btn-primary" style="font-size: 18px; padding: 15px 40px;" onclick="showModal()">
+                    🚀 Teste Grátis por 7 Dias
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="container">
+        <div class="demo-section">
+            <div class="demo-header">
+                <h2>Experimente Agora - Escolha seu Perfil</h2>
+                <p>Veja como o Dr. Território pode ajudar você</p>
+            </div>
+            
+            <div class="profile-grid">
+                <div class="profile-card" onclick="selectProfile('advogado')">
+                    <div class="profile-icon">⚖️</div>
+                    <div>Advogado</div>
+                </div>
+                <div class="profile-card" onclick="selectProfile('cartorio')">
+                    <div class="profile-icon">📋</div>
+                    <div>Cartório</div>
+                </div>
+                <div class="profile-card" onclick="selectProfile('despachante')">
+                    <div class="profile-icon">📁</div>
+                    <div>Despachante</div>
+                </div>
+                <div class="profile-card" onclick="selectProfile('imobiliaria')">
+                    <div class="profile-icon">🏢</div>
+                    <div>Imobiliária</div>
+                </div>
+                <div class="profile-card" onclick="selectProfile('agrimensor')">
+                    <div class="profile-icon">📐</div>
+                    <div>Agrimensor</div>
+                </div>
+                <div class="profile-card" onclick="selectProfile('cidadao')">
+                    <div class="profile-icon">👤</div>
+                    <div>Cidadão</div>
+                </div>
+            </div>
+            
+            <div class="demo-content" id="demoContent">
+                <p style="text-align: center; color: #999; padding: 80px 20px;">
+                    👆 Selecione seu perfil acima para ver os recursos disponíveis
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2>Por que escolher o Dr. Território?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📚</div>
+                    <h3>Base Legal Atualizada</h3>
+                    <p>Lei 13.465/2017, Provimentos CNJ e normas estaduais sempre atualizadas</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📝</div>
+                    <h3>+50 Modelos Prontos</h3>
+                    <p>Petições, requerimentos e contratos prontos para uso</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💬</div>
+                    <h3>Suporte Especializado</h3>
+                    <p>Grupo VIP no WhatsApp e lives mensais com especialistas</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Funciona no Celular</h3>
+                    <p>Acesse de qualquer lugar, a qualquer hora</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔄</div>
+                    <h3>Atualizações Constantes</h3>
+                    <p>Novas funcionalidades e modelos todo mês</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Economia de Tempo</h3>
+                    <p>Reduza 80% do tempo gasto com documentação</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Escolha seu Plano</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>GRÁTIS</h3>
+                    <div class="price">R$ 0<small>/mês</small></div>
+                    <ul class="features">
+                        <li>3 documentos por mês</li>
+                        <li>Modelos básicos</li>
+                        <li>Consultas simples</li>
+                        <li>Comunidade WhatsApp</li>
+                    </ul>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="showModal()">Começar Agora</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>PROFISSIONAL</h3>
+                    <div class="price">R$ 5,99<small>/mês</small></div>
+                    <ul class="features">
+                        <li>Documentos ilimitados</li>
+                        <li>Todos os modelos</li>
+                        <li>Suporte prioritário</li>
+                        <li>Atualizações legais</li>
+                        <li>Certificado de uso</li>
+                        <li>Grupo VIP WhatsApp</li>
+                    </ul>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="showModal()">Teste 7 Dias Grátis</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>EMPRESARIAL</h3>
+                    <div class="price">R$ 29,99<small>/mês</small></div>
+                    <ul class="features">
+                        <li>Multi-usuários</li>
+                        <li>API para integração</li>
+                        <li>Personalização</li>
+                        <li>Treinamento incluso</li>
+                        <li>Suporte dedicado</li>
+                    </ul>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="showModal()">Falar com Vendas</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Junte-se a +500 profissionais</h2>
+            <p>Comece hoje mesmo a revolucionar seu trabalho com regularização fundiária</p>
+            <form class="email-form" onsubmit="submitEmail(event)">
+                <input type="email" class="email-input" placeholder="Seu melhor e-mail" required>
+                <button type="submit" class="btn btn-primary">Quero Testar Grátis</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Produto</h4>
+                    <ul>
+                        <li><a href="#">Recursos</a></li>
+                        <li><a href="#">Preços</a></li>
+                        <li><a href="#">Demonstração</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">WhatsApp</a></li>
+                        <li><a href="#">Email</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="#">LGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.7;">© 2024 Dr. Território - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: #667eea; margin-bottom: 20px;">🎉 Cadastro Rápido</h2>
+            <form onsubmit="submitSignup(event)">
+                <input type="text" placeholder="Nome completo" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px;" required>
+                <input type="email" placeholder="E-mail profissional" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px;" required>
+                <input type="tel" placeholder="WhatsApp" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px;" required>
+                <select style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px;" required>
+                    <option value="">Selecione seu perfil...</option>
+                    <option value="advogado">Advogado(a)</option>
+                    <option value="cartorio">Servidor de Cartório</option>
+                    <option value="despachante">Despachante</option>
+                    <option value="imobiliaria">Imobiliária</option>
+                    <option value="agrimensor">Agrimensor/Técnico</option>
+                    <option value="cidadao">Pessoa Física</option>
+                </select>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Começar Teste Grátis</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px; color: #999; font-size: 14px;">
+                Não pedimos cartão de crédito • Cancele quando quiser
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Profile selection functionality
+        const profiles = {
+            advogado: {
+                title: "Recursos para Advogados",
+                services: [
+                    "Petições REURB (Social e Específica)",
+                    "Modelos de Usucapião (Ordinário e Extraordinário)",
+                    "Inventário e Partilha Extrajudicial",
+                    "Verificação Dominial Completa",
+                    "Cálculo de Custas e Emolumentos",
+                    "Acompanhamento Processual Inteligente"
+                ]
+            },
+            cartorio: {
+                title: "Ferramentas para Cartórios",
+                services: [
+                    "Análise Automática de Documentos",
+                    "Verificação de Assinaturas e ART",
+                    "Geração de Atas e Certidões",
+                    "Modelos de Escrituras Públicas",
+                    "Controle de Protocolos",
+                    "Base Legal Atualizada (CNJ)"
+                ]
+            },
+            despachante: {
+                title: "Soluções para Despachantes",
+                services: [
+                    "Dossiê Completo REURB",
+                    "Checklist de Documentos",
+                    "Certidões Necessárias por Tipo",
+                    "Resposta a Exigências",
+                    "Controle de Protocolos",
+                    "Intermediação com Órgãos"
+                ]
+            },
+            imobiliaria: {
+                title: "Apoio para Imobiliárias",
+                services: [
+                    "Checagem Documental para Venda",
+                    "Regularização de Imóveis",
+                    "Modelos de Contratos",
+                    "Due Diligence Imobiliária",
+                    "Relatórios para Clientes",
+                    "Integração com CRM"
+                ]
+            },
+            agrimensor: {
+                title: "Recursos Técnicos",
+                services: [
+                    "Requisitos Georreferenciamento INCRA",
+                    "Memorial Descritivo Padrão",
+                    "Planilha de Cálculo de Área",
+                    "ART/RRT Modelos",
+                    "Normas Técnicas Atualizadas",
+                    "Certificação SIGEF"
+                ]
+            },
+            cidadao: {
+                title: "Ajuda para Proprietários",
+                services: [
+                    "Lista de Documentos Necessários",
+                    "Modelos de Requerimentos",
+                    "Passo a Passo Regularização",
+                    "Calculadora de Custos",
+                    "Orientações Básicas",
+                    "Contatos de Profissionais"
+                ]
+            }
+        };
+
+        function selectProfile(profileId) {
+            // Remove active class from all cards
+            document.querySelectorAll('.profile-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected card
+            event.target.closest('.profile-card').classList.add('active');
+            
+            // Update demo content
+            const profile = profiles[profileId];
+            const demoContent = document.getElementById('demoContent');
+            
+            demoContent.innerHTML = `
+                <h3 style="color: #667eea; margin-bottom: 20px;">${profile.title}</h3>
+                <ul class="service-list">
+                    ${profile.services.map(service => `<li>${service}</li>`).join('')}
+                </ul>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="showModal()">
+                        Testar Grátis Agora
+                    </button>
+                </div>
+            `;
+        }
+
+        function showModal() {
+            document.getElementById('signupModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('signupModal').style.display = 'none';
+        }
+
+        function submitEmail(event) {
+            event.preventDefault();
+            showModal();
+        }
+
+        function submitSignup(event) {
+            event.preventDefault();
+            alert('✅ Cadastro realizado com sucesso! Você receberá um WhatsApp com as instruções de acesso.');
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('signupModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
