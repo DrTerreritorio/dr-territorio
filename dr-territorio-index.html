@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr. Território - Assistente IA para Regularização Fundiária, REURB, Usucapião e Documentação Imobiliária">
+    <meta name="keywords" content="regularização fundiária, REURB, usucapião, cartório, advogado imobiliário">
+    <meta name="author" content="Dr. Território">
+    
+    <title>Dr. Território - Regularização Fundiária com IA</title>
+    
+    <!-- Link para CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-icon">🏛️</span>
+                    <span class="logo-text">Dr. Território</span>
+                </div>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link">Início</a>
+                    <a href="#servicos" class="nav-link">Serviços</a>
+                    <a href="#precos" class="nav-link">Preços</a>
+                    <a href="#contato" class="nav-link">Contato</a>
+                </div>
+                <div class="nav-buttons">
+                    <a href="https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre o Dr. Território" 
+                       class="btn btn-whatsapp" target="_blank">
+                        WhatsApp
+                    </a>
+                    <button class="btn btn-primary" onclick="abrirModalCadastro()">
+                        Começar Grátis
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Regularização Fundiária com Inteligência Artificial</h1>
+                <p class="hero-subtitle">
+                    O assistente inteligente para advogados, cartórios e profissionais do setor imobiliário
+                </p>
+                
+                <div class="hero-price">
+                    <span>Planos a partir de</span>
+                    <strong>R$ 5,99</strong>
+                    <span>/mês</span>
+                </div>
+                
+                <div class="hero-actions">
+                    <button class="btn btn-large btn-primary" onclick="scrollToSection('demo')">
+                        🚀 Demonstração Gratuita
+                    </button>
+                    <a href="#precos" class="btn btn-large btn-secondary">
+                        Ver Planos
+                    </a>
+                </div>
+                
+                <div class="hero-features">
+                    <div class="feature-badge">✓ 7 dias grátis</div>
+                    <div class="feature-badge">✓ Sem cartão</div>
+                    <div class="feature-badge">✓ Cancele quando quiser</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Demonstração -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Escolha seu Perfil Profissional</h2>
+                <p>Veja como o Dr. Território pode ajudar você</p>
+            </div>
+            
+            <div class="profiles-grid" id="profilesGrid">
+                <!-- Os perfis serão inseridos via JavaScript -->
+            </div>
+            
+            <div class="demo-result" id="demoResult">
+                <div class="demo-placeholder">
+                    <p>👆 Selecione seu perfil acima para ver os recursos disponíveis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Serviços -->
+    <section id="servicos" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recursos Completos</h2>
+                <p>Tudo que você precisa em um só lugar</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3>Modelos de Documentos</h3>
+                    <p>+50 modelos prontos para uso: petições, requerimentos e contratos</p>
+                    <a href="https://wa.me/5511999999999?text=Quero conhecer os modelos de documentos" 
+                       class="btn-link" target="_blank">Saiba mais →</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Análise Inteligente</h3>
+                    <p>IA que analisa documentos e sugere correções automáticas</p>
+                    <a href="https://wa.me/5511999999999?text=Como funciona a análise inteligente?" 
+                       class="btn-link" target="_blank">Saiba mais →</a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>Calculadora de Custos</h3>
+                    <p>Calcule custas, emolumentos e honorários automaticamente</p>
+                    <button class="btn-link" onclick="abrirCalculadora()">Testar agora →</button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📚</div>
+                    <h3>Base Legal Atualizada</h3>
+                    <p>Lei 13.465/2017, Provimentos CNJ e normas estaduais</p>
+                    <button class="btn-link" onclick="mostrarLegislacao()">Consultar →</button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Checklist Inteligente</h3>
+                    <p>Lista personalizada de documentos por tipo de processo</p>
+                    <button class="btn-link" onclick="gerarChecklist()">Gerar lista →</button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">💬</div>
+                    <h3>Suporte Especializado</h3>
+                    <p>Grupo VIP no WhatsApp e suporte prioritário</p>
+                    <a href="https://wa.me/5511999999999?text=Quero participar do grupo VIP" 
+                       class="btn-link" target="_blank">Entrar no grupo →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Preços -->
+    <section id="precos" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Planos e Preços</h2>
+                <p>Escolha o melhor plano para você</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>GRÁTIS</h3>
+                    <div class="price">
+                        <span class="currency">R$</span>
+                        <span class="value">0</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ 3 documentos por mês</li>
+                        <li>✓ Modelos básicos</li>
+                        <li>✓ Consultas simples</li>
+                        <li>✓ Comunidade WhatsApp</li>
+                    </ul>
+                    <button class="btn btn-secondary btn-block" onclick="selecionarPlano('gratis')">
+                        Começar Agora
+                    </button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="badge">MAIS POPULAR</div>
+                    <h3>PROFISSIONAL</h3>
+                    <div class="price">
+                        <span class="currency">R$</span>
+                        <span class="value">5,99</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ Documentos ilimitados</li>
+                        <li>✓ Todos os modelos</li>
+                        <li>✓ Suporte prioritário</li>
+                        <li>✓ Atualizações legais</li>
+                        <li>✓ Certificado de uso</li>
+                        <li>✓ Grupo VIP WhatsApp</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="selecionarPlano('pro')">
+                        Teste 7 Dias Grátis
+                    </button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>EMPRESARIAL</h3>
+                    <div class="price">
+                        <span class="currency">R$</span>
+                        <span class="value">29,99</span>
+                        <span class="period">/mês</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ Multi-usuários</li>
+                        <li>✓ API para integração</li>
+                        <li>✓ Personalização</li>
+                        <li>✓ Treinamento incluso</li>
+                        <li>✓ Suporte dedicado</li>
+                        <li>✓ Relatórios avançados</li>
+                    </ul>
+                    <button class="btn btn-secondary btn-block" onclick="selecionarPlano('business')">
+                        Falar com Vendas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Contato/CTA -->
+    <section id="contato" class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Pronto para Revolucionar seu Trabalho?</h2>
+                <p>Junte-se a mais de 500 profissionais que já usam o Dr. Território</p>
+                
+                <form class="contact-form" id="contactForm" onsubmit="enviarFormulario(event)">
+                    <div class="form-group">
+                        <input type="text" id="nome" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Seu melhor e-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="whatsapp" placeholder="WhatsApp (11) 99999-9999" required>
+                    </div>
+                    <div class="form-group">
+                        <select id="perfil" required>
+                            <option value="">Selecione seu perfil...</option>
+                            <option value="advogado">Advogado(a)</option>
+                            <option value="cartorio">Servidor de Cartório</option>
+                            <option value="despachante">Despachante</option>
+                            <option value="imobiliaria">Imobiliária</option>
+                            <option value="agrimensor">Agrimensor/Técnico</option>
+                            <option value="cidadao">Pessoa Física</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">
+                        🚀 Quero Testar Gratuitamente
+                    </button>
+                </form>
+                
+                <p class="form-note">
+                    🔒 Seus dados estão seguros • Não pedimos cartão de crédito
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Dr. Território</h4>
+                    <p>Regularização fundiária inteligente para profissionais</p>
+                    <div class="social-links">
+                        <a href="https://wa.me/5511999999999" target="_blank">WhatsApp</a>
+                        <a href="https://instagram.com/drterritorio" target="_blank">Instagram</a>
+                        <a href="https://linkedin.com/company/drterritorio" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#precos">Preços</a></li>
+                        <li><a href="#demo">Demonstração</a></li>
+                        <li><a href="https://wa.me/5511999999999" target="_blank">Suporte</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">LGPD</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contato Rápido</h4>
+                    <p>📱 (11) 99999-9999</p>
+                    <p>📧 contato@drterritorio.com.br</p>
+                    <p>⏰ Seg-Sex: 9h às 18h</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 Dr. Território - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Cadastro -->
+    <div id="modalCadastro" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fecharModal()">&times;</span>
+            <h2>🎉 Cadastro Rápido</h2>
+            <p>Preencha seus dados para começar o teste grátis</p>
+            
+            <form id="cadastroForm" onsubmit="realizarCadastro(event)">
+                <input type="text" placeholder="Nome completo" required>
+                <input type="email" placeholder="E-mail profissional" required>
+                <input type="tel" placeholder="WhatsApp" required>
+                <select required>
+                    <option value="">Seu perfil profissional...</option>
+                    <option value="advogado">Advogado(a)</option>
+                    <option value="cartorio">Servidor de Cartório</option>
+                    <option value="despachante">Despachante</option>
+                    <option value="imobiliaria">Imobiliária</option>
+                    <option value="agrimensor">Agrimensor</option>
+                    <option value="cidadao">Pessoa Física</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-block">
+                    Começar Teste Grátis
+                </button>
+            </form>
+            
+            <p class="modal-note">Não pedimos cartão • Cancele quando quiser</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
