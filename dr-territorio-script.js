@@ -7,8 +7,8 @@
 // CONFIGURAÇÕES GLOBAIS
 // ========================================
 const CONFIG = {
-    whatsapp: '5511999999999', // Substitua pelo número real
-    email: 'contato@drterritorio.com.br',
+    whatsapp: '5577999454598', // Substitua pelo número real
+    email: 'drterritorio@gmail.com',
     googleFormUrl: '', // Adicionar URL do Google Form quando criar
     
     // Mensagens padrão
