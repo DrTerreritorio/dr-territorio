@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Território - Sistema de Captura</title>
+    
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .success-message {
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            margin-bottom: 20px;
+        }
+        
+        .error-message {
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            margin-bottom: 20px;
+        }
+        
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+        
+        .whatsapp-float svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+        
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .benefit-icon {
+            font-size: 24px;
+        }
+        
+        .benefit-text {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ Dr. Território</h1>
+        <p class="subtitle">Cadastre-se e receba acesso imediato</p>
+        
+        <div class="success-message" id="successMessage">
+            ✅ Cadastro realizado com sucesso! Verifique seu email.
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ❌ Erro ao enviar. Tente novamente.
+        </div>
+        
+        <div class="info-box">
+            <h3>📋 Como Configurar o EmailJS:</h3>
+            <p>1. Crie conta grátis em <a href="https://www.emailjs.com" target="_blank">emailjs.com</a></p>
+            <p>2. Crie um serviço de email (Gmail, Outlook, etc)</p>
+            <p>3. Crie um template de email</p>
+            <p>4. Copie seus IDs e cole no código abaixo</p>
+        </div>
+        
+        <form id="captureForm">
+            <div class="form-group">
+                <label for="nome">Nome Completo *</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Profissional *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="whatsapp">WhatsApp *</label>
+                <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="perfil">Perfil Profissional *</label>
+                <select id="perfil" name="perfil" required>
+                    <option value="">Selecione...</option>
+                    <option value="Advogado">Advogado(a)</option>
+                    <option value="Cartório">Servidor de Cartório</option>
+                    <option value="Despachante">Despachante</option>
+                    <option value="Imobiliária">Imobiliária</option>
+                    <option value="Agrimensor">Agrimensor/Técnico</option>
+                    <option value="Cidadão">Pessoa Física</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="mensagem">Como podemos ajudar?</label>
+                <textarea id="mensagem" name="mensagem" rows="3" placeholder="Conte um pouco sobre suas necessidades..."></textarea>
+            </div>
+            
+            <div class="benefits">
+                <div class="benefit">
+                    <span class="benefit-icon">✅</span>
+                    <span class="benefit-text">7 dias grátis</span>
+                </div>
+                <div class="benefit">
+                    <span class="benefit-icon">📄</span>
+                    <span class="benefit-text">+50 modelos</span>
+                </div>
+                <div class="benefit">
+                    <span class="benefit-icon">💬</span>
+                    <span class="benefit-text">Suporte VIP</span>
+                </div>
+                <div class="benefit">
+                    <span class="benefit-icon">🔄</span>
+                    <span class="benefit-text">Atualizações</span>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn">
+                🚀 Começar Teste Gratuito
+            </button>
+        </form>
+    </div>
+    
+    <!-- Botão WhatsApp Flutuante -->
+    <div class="whatsapp-float" onclick="openWhatsApp()">
+        <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </div>
+    
+    <script>
+        // ====================================
+        // CONFIGURAÇÃO DO EMAILJS
+        // ====================================
+        // IMPORTANTE: Substitua pelos seus IDs reais do EmailJS
+        const EMAILJS_CONFIG = {
+            publicKey: 'SUA_PUBLIC_KEY_AQUI',  // Substitua
+            serviceId: 'SEU_SERVICE_ID_AQUI',   // Substitua
+            templateId: 'SEU_TEMPLATE_ID_AQUI'  // Substitua
+        };
+        
+        // Inicializar EmailJS
+        (function() {
+            emailjs.init(EMAILJS_CONFIG.publicKey);
+        })();
+        
+        // ====================================
+        // CONFIGURAÇÃO DO WHATSAPP
+        // ====================================
+        const WHATSAPP_NUMBER = '5577999454598'; // Substitua pelo seu número
+        
+        // ====================================
+        // FORMULÁRIO DE CAPTURA
+        // ====================================
+        document.getElementById('captureForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Desabilitar botão
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Enviando...';
+            
+            // Coletar dados do formulário
+            const formData = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                perfil: document.getElementById('perfil').value,
+                mensagem: document.getElementById('mensagem').value,
+                data: new Date().toLocaleString('pt-BR')
+            };
+            
+            // Salvar no localStorage (backup)
+            saveToLocalStorage(formData);
+            
+            // Se EmailJS não estiver configurado, usar WhatsApp
+            if (EMAILJS_CONFIG.publicKey === 'SUA_PUBLIC_KEY_AQUI') {
+                // Modo alternativo: WhatsApp
+                sendViaWhatsApp(formData);
+                
+                // Mostrar sucesso
+                successMsg.style.display = 'block';
+                successMsg.textContent = '✅ Cadastro salvo! Abrindo WhatsApp...';
+                
+                // Reset form
+                this.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 Começar Teste Gratuito';
+                
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 5000);
+                
+                return;
+            }
+            
+            // Enviar via EmailJS
+            emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                formData
+            ).then(
+                function() {
+                    // Sucesso
+                    successMsg.style.display = 'block';
+                    errorMsg.style.display = 'none';
+                    
+                    // Limpar formulário
+                    document.getElementById('captureForm').reset();
+                    
+                    // Reabilitar botão
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🚀 Começar Teste Gratuito';
+                    
+                    // Esconder mensagem após 5 segundos
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 5000);
+                    
+                    // Opcional: Abrir WhatsApp também
+                    setTimeout(() => {
+                        if (confirm('Deseja falar conosco no WhatsApp?')) {
+                            sendViaWhatsApp(formData);
+                        }
+                    }, 1000);
+                },
+                function(error) {
+                    // Erro
+                    console.error('Erro:', error);
+                    errorMsg.style.display = 'block';
+                    successMsg.style.display = 'none';
+                    
+                    // Reabilitar botão
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🚀 Começar Teste Gratuito';
+                    
+                    // Alternativa: enviar via WhatsApp
+                    setTimeout(() => {
+                        if (confirm('Erro no envio. Deseja enviar via WhatsApp?')) {
+                            sendViaWhatsApp(formData);
+                        }
+                    }, 1000);
+                }
+            );
+        });
+        
+        // ====================================
+        // FUNÇÕES AUXILIARES
+        // ====================================
+        
+        // Salvar no localStorage
+        function saveToLocalStorage(data) {
+            const leads = JSON.parse(localStorage.getItem('drterritorio_leads') || '[]');
+            leads.push(data);
+            localStorage.setItem('drterritorio_leads', JSON.stringify(leads));
+            console.log('Lead salvo localmente:', data);
+        }
+        
+        // Enviar via WhatsApp
+        function sendViaWhatsApp(data) {
+            const message = `🏛️ *NOVO CADASTRO - DR. TERRITÓRIO*\n\n` +
+                          `📝 *Dados do Lead:*\n\n` +
+                          `*Nome:* ${data.nome}\n` +
+                          `*Email:* ${data.email}\n` +
+                          `*WhatsApp:* ${data.whatsapp}\n` +
+                          `*Perfil:* ${data.perfil}\n` +
+                          `*Mensagem:* ${data.mensagem || 'Não informada'}\n` +
+                          `*Data:* ${data.data}\n\n` +
+                          `✅ Lead capturado com sucesso!`;
+            
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+        
+        // Botão WhatsApp flutuante
+        function openWhatsApp() {
+            const message = '🏛️ Olá! Vim pelo site do Dr. Território e gostaria de mais informações.';
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+        
+        // Máscara para WhatsApp
+        document.getElementById('whatsapp').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            
+            if (value.length > 6) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+            } else if (value.length > 2) {
+                value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Exportar leads (função útil para admin)
+        function exportLeads() {
+            const leads = JSON.parse(localStorage.getItem('drterritorio_leads') || '[]');
+            const csv = convertToCSV(leads);
+            downloadCSV(csv, 'leads_drterritorio.csv');
+        }
+        
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+            
+            const headers = Object.keys(data[0]);
+            const csvHeaders = headers.join(',');
+            
+            const csvRows = data.map(row => {
+                return headers.map(header => {
+                    const value = row[header] || '';
+                    return `"${value.toString().replace(/"/g, '""')}"`;
+                }).join(',');
+            });
+            
+            return csvHeaders + '\n' + csvRows.join('\n');
+        }
+        
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Console helper
+        console.log('====================================');
+        console.log('Dr. Território - Sistema de Captura');
+        console.log('====================================');
+        console.log('Para configurar EmailJS:');
+        console.log('1. Crie conta em emailjs.com');
+        console.log('2. Substitua os IDs nas linhas 217-221');
+        console.log('');
+        console.log('Para exportar leads salvos:');
+        console.log('Digite no console: exportLeads()');
+        console.log('====================================');
+    </script>
+</body>
+</html>
